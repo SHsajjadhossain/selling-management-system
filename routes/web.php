@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{HomeController, ProductController, SellingInfoController};
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\{ProductController, SellingInfoController};
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -35,5 +36,6 @@ Route::get('product/trash/product', [ProductController::class, 'trashproduct'])-
 Route::get('product/trash/resotre/{id}', [ProductController::class, 'trashrestore'])->name('trash.restore');
 Route::post('product/trash/forcedelete', [ProductController::class, 'trashforcedelete'])->name('trash.forcedelete');
 Route::get('selling/info/adminindex', [SellingInfoController::class, 'adminindex'])->name('sellinginfo.adminindex');
-// Route::post('selling_info/product_info', [SellingInfoController::class, 'selling_info_product_info'])->name('selling_info.product_info');
+Route::get('send/invoice/{id}', [SellingInfoController::class, 'sendinvoice'])->name('send.invoice');
+// Route::get('/selling_info/getProductinfo', [SellingInfoController::class, 'getProductinfo'])->name('selling_info.getProductinfo');
 

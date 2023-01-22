@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('product_name');
             $table->integer('product_price');
             $table->integer('product_quantity');
+            $table->string('mail_status')->default('0')->comment('0=notsend, 1=send');
             $table->timestamps();
         });
     }

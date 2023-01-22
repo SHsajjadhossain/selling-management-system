@@ -56,7 +56,7 @@
                     <th>Product Name</th>
                     <th>Product Price</th>
                     <th>Product Quantity</th>
-                    <th>Actions</th>
+                    <th>Invoice Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,7 +64,7 @@
                     @forelse ($all_sellings as $key => $all_selling)
                         <tr>
                             <td>{{ $all_sellings->firstItem() + $key }}</td>
-                            <td>{{ $all_selling->employee_id }}</td>
+                            <td>{{ $all_selling->relationwithemployee->name }}</td>
                             <td>{{ $all_selling->customer_name }}</td>
                             <td>{{ $all_selling->customer_email }}</td>
                             <td>{{ $all_selling->customer_phone }}</td>
@@ -72,9 +72,11 @@
                             <td>{{ $all_selling->product_price }}</td>
                             <td>{{ $all_selling->product_quantity }}</td>
                             <td>
-                                {{-- <a href="#" class="text-primary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="View detail" aria-label="Views"><i class="bi bi-eye-fill"></i></a> --}}
-                                <a href="#" class="text-warning me-3" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Edit info" aria-label="Edit"><i class="bi bi-pencil-fill"></i></a>
-                                <a href="#" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="" data-bs-original-title="Delete" aria-label="Delete"><i class="bi bi-trash-fill"></i></a>
+                                @if ($all_selling->mail_status == 0)
+                                    <a href="{{ route('send.invoice', $all_selling->id) }}" class="btn btn-sm btn-primary">Send</a>
+                                @else
+                                    <span class="btn btn-sm btn-success" style="cursor: default">Invoice Sent</span>
+                                @endif
                             </td>
                         </tr>
                     @empty

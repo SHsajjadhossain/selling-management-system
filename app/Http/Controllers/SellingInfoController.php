@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendInvoice;
 use App\Models\Product;
 use App\Models\Selling_info;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class SellingInfoController extends Controller
 {
@@ -101,15 +104,14 @@ class SellingInfoController extends Controller
         //
     }
 
-    // public function selling_info_product_info(Request $request)
+    // public function getProductinfo(Request $request)
     // {
-    //     $product_search = $request->product_name;
-    //     if ($product_search = "") {
-    //         $products = Product::where('product_name', $request->product_name)->limit(5)->get('product_selling_price');
-    //         echo $products;
-    //     }
-    //     else{
-    //      $products = Product::orderby('product_name','asc')->select('product_selling_price','product_name')->where('name', 'like', '%' .$product_search . '%')->limit(5)->get();
+    //     $search = $request->product_name;
+
+    //     if($search == ''){
+    //      $products = Product::orderby('product_name','asc')->select('product_name, product_selling_price','')->limit(5)->get();
+    //   }else{
+    //      $products = Product::orderby('product_name','asc')->select('product_name','product_selling_price')->where('product_name', 'like', '%' .$search . '%')->limit(5)->get();
     //   }
 
     //   $response = array();
@@ -125,5 +127,16 @@ class SellingInfoController extends Controller
         return view('selling_info.adminindex',[
             'all_sellings' => Selling_info::paginate('10'),
         ]);
+    }
+
+    public function sendinvoice ($id)
+    {
+        $cusotmer_info = Selling_info::find($id);
+        Mail::to($cusotmer_info->customer_email)->send(new SendInvoice($cusotmer_info));
+        Selling_info::find($id)->update([
+            'mail_status' => 1
+        ]);
+
+        return back();
     }
 }

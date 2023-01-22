@@ -2,6 +2,7 @@
 
 @section('header_css')
 
+{{-- <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/jQuery-ui/jquery-ui.min.css') }}"> --}}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
 @endsection
@@ -76,7 +77,7 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label">Product Price</label>
-                            <input type="number" class="form-control @error('product_price') is-invalid @enderror" id="product_selling_price" name="product_price" value="{{ old('product_price') }}">
+                            <input type="number" class="form-control @error('product_price') is-invalid @enderror" id="product_price" name="product_price" value="{{ old('product_price') }}">
                             @error('product_price')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -105,33 +106,82 @@
 
 @section('footer_js')
 
+{{-- <script src="{{ asset('dashboard/assets/js/jquery-3.6.3.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('dashboard/assets/plugins/jQuery-ui/jquery-ui.min.js') }}"></script> --}}
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 
 <script>
     @if (session('success'))
         toastr.success("{{ session('success') }}")
     @endif
-    // $(document).ready(function () {
-    //     $('#product_name').autocomplete({
-    //         source: function(request, response){
-    //             // Fetch data
-    //             $.ajaxSetup({
-    //                 headers: {
-    //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //                 }
-    //             });
-    //             $.ajax({
-    //                 type: 'POST',
-    //                 url: '/selling_info/product_info',
-    //                 data: {product_name: request.term},
-    //                 success: function (data) {
-    //                     alert(data);
-    //                 }
-    //             });
-    //         },
-    //     });
-    // });
 </script>
+
+{{-- <script>
+    $(document).ready(function () {
+        $("#product_name").autocomplete({
+            source: [
+                'Apple',
+                'Banana',
+                'Orange'
+            ]
+        });
+    });
+</script> --}}
+
+{{-- <script>
+    $(document).ready(function () {
+        $('#product_name').autocomplete({
+            source: function (request, response) {
+                $.getJSON("{{ route('selling_info.product_info') }}", function(data){
+                    var array = $.map(data, function (row) {
+                        return {
+                            value:row.product_price,
+                            label:row.product_name
+                        }
+                    })
+
+                    response(array);
+                })
+             }
+        });
+    });
+</script> --}}
+
+{{-- <script type="text/javascript">
+
+    // CSRF Token
+    var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
+    $(document).ready(function () {
+        $("#product_name").autocomplete({
+            source:function(request, response){
+                // Fetch data
+                $.ajax({
+                    url:"{{ route('selling_info.getProductinfo') }}",
+                    type: 'POST',
+                    dataType: "json",
+                    data: {
+                        _token: CSRF_TOKEN,
+                        product_name: request.term
+                    },
+                    success: function( data ) {
+                        response( data );
+                    }
+                });
+            },
+            select: function (event, ui) {
+                // Set selection
+                $('#product_name').val(ui.item.label); // display the selected text
+                $('#product_price').val(ui.item.value); // save selected id to input
+                return false;
+            }
+        });
+    });
+
+</script> --}}
+
+
 
 @endsection
 

@@ -8,11 +8,11 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="icon" href="{{ asset('dashboard/assets/images/favicon-32x32.png') }}" type="image/png" />
   <!--plugins-->
+  <link rel="stylesheet" type="text/css" href="{{ asset('dashboard/assets/plugins/jQuery-ui/jquery-ui.min.css') }}">
   <link href="{{ asset('dashboard/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
   <link href="{{ asset('dashboard/assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
   <link href="{{ asset('dashboard/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
   <link href="{{ asset('dashboard/assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
-  <link rel="stylesheet" href="{{ asset('dashboard/assets/plugins/jQueryui/jquery-ui.min.css') }}">
   <!-- Bootstrap CSS -->
   <link href="{{ asset('dashboard/assets/css/bootstrap.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('dashboard/assets/css/bootstrap-extended.css') }}" rel="stylesheet" />
@@ -710,8 +710,12 @@
 
   <!-- Bootstrap bundle JS -->
   <script src="{{ asset('dashboard/assets/js/bootstrap.bundle.min.js') }}"></script>
+
   <!--plugins-->
+
+  {{-- <script src="{{ asset('dashboard/assets/plugins/jQuery-ui/jquery-3.6.0.min.js') }}" type="text/javascript"></script> --}}
   <script src="{{ asset('dashboard/assets/js/jquery.min.js') }}"></script>
+  <script src="{{ asset('dashboard/assets/plugins/jQuery-ui/jquery-ui.min.js') }}" type="text/javascript"></script>
   <script src="{{ asset('dashboard/assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
   <script src="{{ asset('dashboard/assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
   <script src="{{ asset('dashboard/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
@@ -724,12 +728,12 @@
   <!--app-->
   <script src="{{ asset('dashboard/assets/js/app.js') }}"></script>
   <script src="{{ asset('dashboard/assets/js/index2.js') }}"></script>
-  <script src="{{ asset('dashboard/assets/plugins/jQueryui/jquery-ui.min.js') }}"></script>
-  <script>
-    new PerfectScrollbar(".best-product")
- </script>
+    <script>
+        new PerfectScrollbar(".best-product")
+    </script>
 
 @yield('footer_js')
+
 
 </body>
 
